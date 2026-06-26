@@ -22,7 +22,7 @@
   <tr>
     <td align="center">
       <b>视频教程请关注抖音</b><br>
-      <img width="500" alt="视频教程请关注抖音" src="https://github.com/user-attachments/assets/a4c94ee4-0e7e-4544-ae5f-3a2e957d0bec" />
+      <img width="500" alt="635611d42c5739d8a98ea08eec010d30" src="https://github.com/user-attachments/assets/37d4b0b6-3d22-4492-bb01-c0d9bae5a9e0" />
     </td>
     <td align="center">
       <b>Agent科研交流群</b><br>
