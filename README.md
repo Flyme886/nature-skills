@@ -319,26 +319,82 @@ skills/nature-<topic>/
 | `README_EN.md` | 必需 | 与中文详情页配套的英文说明文档 |
 | `references/*.md` | 复杂技能推荐 | 模块化规则文件，例如 API、设计理论、教程、图表类型等 |
 
-建议每个 `README.md` / `README_EN.md` 尽量使用统一的信息结构，方便用户点进详情页后快速判断能不能用：
+### 3. README 写作规则
+
+每个新增技能都必须同时提供 `README.md` 和 `README_EN.md`。README 是面向人的技能入口页，不是 `SKILL.md` 的重复版，也不是安装手册。它的目标是让用户在 30 秒内判断：这个 skill 能不能解决我的问题、我要给它什么、它会产出什么、边界在哪里。
+
+基本规则：
+
+- 中文 README 和英文 README 必须一一镜像：标题数量一致、顺序一致、信息点一致；英文页不要写成另一套独立模板。
+- 顶部固定为技能名、语言切换链接和一句定位说明。
+- 默认使用下面的基础结构；只有确实需要时才插入可选章节。
+- 不要在单个 skill README 中重复仓库安装教程、作者信息、变更日志、开发过程、完整文件树或大段内部实现细节。
+- 复杂规则、API 参数、长教程、脚本说明和模板索引应放进 `references/`、`static/`、`scripts/` 或 `SKILL.md`，README 只保留路标。
+- 如果技能有视觉资产，可以放一个小型预览表；不要把 README 变成大型图库或长篇技术手册。
+
+中文 README 基础结构：
 
 ```markdown
-# nature-<topic>
+# `nature-<topic>` 技能
 
-## 它能做什么
-## 适合什么时候用
-## 你可以直接这样问
-## 输入需要什么
-## 输出会是什么
-## 依赖 / API Key / 本地环境
-## 常见问题
+[English](README_EN.md)
+
+一句话说明这个技能的定位、主要任务和使用边界。
+
+## 适合用它做什么
+## 典型请求
+## 你需要提供
+## 产出
+## 边界
 ## 相关技能
 ```
 
-### 3. 录制使用教程
+英文 README 必须对应为：
+
+```markdown
+# `nature-<topic>` Skill
+
+[中文说明](README.md)
+
+One sentence describing the skill's role, main task, and usage boundary.
+
+## What To Use It For
+## Typical Requests
+## What You Need To Provide
+## Outputs
+## Boundaries
+## Related Skills
+```
+
+可选章节必须中英文同步插入，并保持相同顺序。常见可选章节包括：
+
+| 中文章节 | 英文章节 | 使用场景 |
+|----------|----------|----------|
+| `## 工作方式` | `## Workflow` | 需要解释核心流程或路由方式 |
+| `## 运行和依赖` | `## Runtime and Dependencies` | 有脚本、MCP、API key、本地配置或外部依赖 |
+| `## 示例预览` | `## Example Preview` | 有少量图件、截图或可视化资产值得展示 |
+| `## 内置参考` | `## Built-In References` | 需要指向 `references/`、`assets/` 或 demo |
+| `## 方法来源` | `## Method Sources` | 写作、审查或分析规则来自特定来源 |
+| `## 三种模式` | `## Three Modes` | 技能有清晰的 compose/revise/hybrid 等模式 |
+| `## 与 ... 的关系` | `## Relationship With ...` | 容易和另一个技能混淆，需要说明分工 |
+
+提交前至少做这些 README 检查：
+
+```bash
+git diff --check
+for d in skills/nature-*; do
+  [ -f "$d/README.md" ] && [ -f "$d/README_EN.md" ] || continue
+  rg -q '^\[English\]\(README_EN\.md\)$' "$d/README.md"
+  rg -q '^\[中文说明\]\(README\.md\)$' "$d/README_EN.md"
+  test "$(rg -c '^## ' "$d/README.md")" = "$(rg -c '^## ' "$d/README_EN.md")"
+done
+```
+
+### 4. 录制使用教程
 
 提交 PR 时，请同时录制一个简短的使用教程，说明这个 skill 解决什么问题、如何触发、需要什么输入，以及会产出什么结果。可以在 PR 描述中附上视频、录屏链接或可公开访问的教程地址。
 
-### 4. `SKILL.md` frontmatter 模板
+### 5. `SKILL.md` frontmatter 模板
 
 ```yaml
 ---
@@ -348,7 +404,7 @@ description: >-
 ---
 ```
 
-### 5. 更新技能索引
+### 6. 更新技能索引
 
 在上方 [技能索引](#技能索引) 表格中添加一行：
 
@@ -356,7 +412,7 @@ description: >-
 | [`nature-<topic>`](skills/nature-<topic>/README.md) | Draft / Stable | 一句话用途 | 触发词 | [详情](skills/nature-<topic>/README.md) |
 ```
 
-### 6. 状态标签
+### 7. 状态标签
 
 | 标签 | 含义 |
 |-------|------|

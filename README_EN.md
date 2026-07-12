@@ -382,29 +382,85 @@ skills/nature-<topic>/
 | `README_EN.md` | Yes | English documentation paired with the Chinese details page |
 | `references/*.md` | Recommended for complex skills | Modular rule files, API references, design theory, tutorials, chart types, and similar material |
 
-Each `README.md` / `README_EN.md` should use a consistent information structure so users can open a details page and quickly decide whether the skill fits:
+### 3. README Writing Rules
+
+Every new skill must include both `README.md` and `README_EN.md`. The README is a human-facing entry page, not a duplicate of `SKILL.md` and not an installation manual. Its job is to help users decide within 30 seconds whether the skill fits their task, what they need to provide, what it will output, and where its boundaries are.
+
+Basic rules:
+
+- The Chinese and English README files must be one-to-one mirrors: same heading count, same order, and same information points. Do not let the English page become a separate template.
+- Start with the skill name, language switch link, and one positioning sentence.
+- Use the base structure below by default; add optional sections only when they are genuinely needed.
+- Do not repeat repository installation instructions, author bios, changelogs, development history, full file trees, or long internal implementation details inside a single skill README.
+- Put complex rules, API parameters, long tutorials, script explanations, and template indexes in `references/`, `static/`, `scripts/`, or `SKILL.md`. Keep only navigational pointers in the README.
+- If the skill has visual assets, a small preview table is fine; do not turn the README into a large gallery or long technical manual.
+
+Chinese README base structure:
 
 ```markdown
-# nature-<topic>
+# `nature-<topic>` 技能
 
-## What It Does
-## When to Use It
-## Copy-Paste Prompts
-## Required Inputs
-## Expected Outputs
-## Dependencies / API Keys / Local Environment
-## FAQ
+[English](README_EN.md)
+
+一句话说明这个技能的定位、主要任务和使用边界。
+
+## 适合用它做什么
+## 典型请求
+## 你需要提供
+## 产出
+## 边界
+## 相关技能
+```
+
+The English README must mirror it as:
+
+```markdown
+# `nature-<topic>` Skill
+
+[中文说明](README.md)
+
+One sentence describing the skill's role, main task, and usage boundary.
+
+## What To Use It For
+## Typical Requests
+## What You Need To Provide
+## Outputs
+## Boundaries
 ## Related Skills
 ```
 
-### 3. Record a Usage Tutorial
+Optional sections must be inserted in both languages and in the same order. Common optional sections:
+
+| Chinese Section | English Section | Use Case |
+|---|---|---|
+| `## 工作方式` | `## Workflow` | Explain the core workflow or routing behavior |
+| `## 运行和依赖` | `## Runtime and Dependencies` | Scripts, MCP services, API keys, local config, or external dependencies |
+| `## 示例预览` | `## Example Preview` | A few figures, screenshots, or visual assets are worth showing |
+| `## 内置参考` | `## Built-In References` | Point to `references/`, `assets/`, or demos |
+| `## 方法来源` | `## Method Sources` | Writing, review, or analysis rules come from specific sources |
+| `## 三种模式` | `## Three Modes` | The skill has clear compose/revise/hybrid-style modes |
+| `## 与 ... 的关系` | `## Relationship With ...` | The skill is easy to confuse with another skill and needs a division-of-labor note |
+
+Before submitting, run at least these README checks:
+
+```bash
+git diff --check
+for d in skills/nature-*; do
+  [ -f "$d/README.md" ] && [ -f "$d/README_EN.md" ] || continue
+  rg -q '^\[English\]\(README_EN\.md\)$' "$d/README.md"
+  rg -q '^\[中文说明\]\(README\.md\)$' "$d/README_EN.md"
+  test "$(rg -c '^## ' "$d/README.md")" = "$(rg -c '^## ' "$d/README_EN.md")"
+done
+```
+
+### 4. Record a Usage Tutorial
 
 When submitting a PR, please also record a short usage tutorial explaining what
 problem the skill solves, how to trigger it, what inputs it needs, and what
 outputs it produces. Add the video, screencast link, or public tutorial URL to
 the PR description.
 
-### 4. `SKILL.md` Frontmatter Template
+### 5. `SKILL.md` Frontmatter Template
 
 ```yaml
 ---
@@ -415,7 +471,7 @@ description: >-
 ---
 ```
 
-### 5. Update Skill Index
+### 6. Update Skill Index
 
 After adding a skill, update the [Skill Index](#skill-index) table:
 
@@ -423,7 +479,7 @@ After adding a skill, update the [Skill Index](#skill-index) table:
 | [`nature-<topic>`](skills/nature-<topic>/README_EN.md) | Draft / Stable | One-sentence purpose | Trigger terms | [Details](skills/nature-<topic>/README_EN.md) |
 ```
 
-### 6. Status Labels
+### 7. Status Labels
 
 | Status | Meaning |
 |---|---|
