@@ -1,5 +1,7 @@
 # nature-literature-pipeline
 
+[English](README_EN.md)
+
 文献管线引擎 + 每日推送应用层。一套完整的自动化文献发现和跟进系统。
 
 ## 这是什么

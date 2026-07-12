@@ -1,5 +1,7 @@
 # experiment-log
 
+[English](README_EN.md)
+
 标准化实验日志记录工具。接收图片、语音、文字等原始材料，自动生成带 YAML frontmatter 的结构化日志。
 
 ## 这是什么

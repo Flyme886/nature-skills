@@ -1,4 +1,6 @@
-﻿# `nature-statistics` 技能
+# `nature-statistics` 技能
+
+[English](README_EN.md)
 
 `nature-statistics` 用于审查、改写或起草 Nature / 高影响力期刊投稿中的统计报告文本。它关注的是论文中统计信息是否足够透明、可复核、与实验设计一致，而不是把所有统计问题简化成“p 值是否显著”。
 

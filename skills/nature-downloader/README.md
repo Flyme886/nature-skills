@@ -1,5 +1,7 @@
 # nature-downloader
 
+[English](README_EN.md)
+
 <p align="center">
   <img src="assets/banner.jpg" alt="nature-downloader — 补齐 nature 工作流缺失的 PDF 落地环节" width="100%">
 </p>

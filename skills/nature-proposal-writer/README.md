@@ -1,5 +1,7 @@
 # researchwrite
 
+[English](README_EN.md)
+
 Proposal-first 科研写作状态机。不是"帮我写论文"——它强制执行写作前的论证架构，写完跑四层 QA pipeline。
 
 ## 这是什么

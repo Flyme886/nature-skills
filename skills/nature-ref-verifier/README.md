@@ -7,6 +7,8 @@ description: >-
 
 # nature-ref-verifier
 
+[English](README_EN.md)
+
 ## 用途
 
 逐条验证参考文献的元数据准确性。适合论文提交前自查、审稿意见回复时的引用核查、Zotero 库定期养护。

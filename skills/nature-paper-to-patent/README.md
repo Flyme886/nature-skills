@@ -1,5 +1,7 @@
 # `nature-paper-to-patent` 技能
 
+[English](README_EN.md)
+
 `nature-paper-to-patent` 是一个有证据约束的工作流，用于把科研论文、学位论文、技术报告、源代码、图表和发明人笔记转换为结构化中国发明专利草稿。
 
 该技能面向研究生、高校科研人员和技术团队。它生成中文正式专利文档，同时让面向 agent 的分析和路由说明保持可跨 AI agent 迁移。
