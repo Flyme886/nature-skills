@@ -33,6 +33,8 @@
   worldwide. It is an early form of a "skill journal": the goal is not empty
   storytelling, but solving real domain problems.
 - Knowledge Planet: `Nature Skills` and the philosophy behind it.
+<img width="300" height="400" alt="1591" src="https://github.com/user-attachments/assets/64e37909-0a48-4bfb-8471-c2aff971a0f6" />
+
 
 ## Quick Start
 
@@ -98,10 +100,6 @@ know the skill name, explicitly say "use `nature-reader`" or "use
     <td align="center">
       <b>Follow Douyin for video tutorials</b><br>
       <img width="300" alt="Douyin tutorials" src="https://github.com/user-attachments/assets/37d4b0b6-3d22-4492-bb01-c0d9bae5a9e0" />
-    </td>
-    <td align="center">
-      <b>Knowledge Planet 50 CNY/year</b><br>
-      <img width="300" alt="Knowledge Planet" src="https://github.com/user-attachments/assets/7a7e467a-59d4-4514-9b42-eefd01bf9591" />
     </td>
     <td align="center">
       <b>Agent Research Community</b><br>
