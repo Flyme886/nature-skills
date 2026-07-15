@@ -1393,14 +1393,13 @@ h3 { font-size: var(--fs-h3); }
         <div class="install-card__title">
           <span class="install-card__icon">⚡</span> Codex
         </div>
-        <p data-i18n="installCodexDesc">使用仓库自带脚本一键安装或更新全部技能。</p>
-        <div class="code-block"><span class="comment"># 克隆并安装</span>
-<span class="cmd">git clone</span> https://github.com/Yuan1z0825/nature-skills.git
-<span class="cmd">cd</span> nature-skills
-<span class="cmd">scripts/update-codex-skills.sh</span> --pull
+        <p data-i18n="installCodexDesc">使用 npx skills 发现、安装和持续更新全部技能。</p>
+        <div class="code-block"><span class="comment"># 查看并全局安装到 Codex</span>
+<span class="cmd">npx skills add</span> Yuan1z0825/nature-skills --list
+<span class="cmd">npx skills add</span> Yuan1z0825/nature-skills --global --agent codex --skill '*' --yes --copy
 
-<span class="comment"># 验证安装</span>
-<span class="cmd">scripts/update-codex-skills.sh</span> --check</div>
+<span class="comment"># 后续更新</span>
+<span class="cmd">npx skills update</span> --global --yes</div>
       </div>
     </div>
 
@@ -1601,7 +1600,7 @@ const i18n = {
     installTitle: '选择你的平台，即刻开始',
     installDesc: 'Nature Skills 支持 Claude Code、Codex、OpenClaw、OpenCode、Hermes 等主流 AI Agent 平台。',
     installCCDesc: '推荐使用 subagent wrapper 方式，保留完整目录结构。',
-    installCodexDesc: '使用仓库自带脚本一键安装或更新全部技能。',
+    installCodexDesc: '使用 npx skills 发现、安装和持续更新全部技能。',
 
     quoteText: 'Nature Skills 不是工具的成功，而是一种新的思考方式开始在人群中蔓延。我见证了许多人完成科研范式的转变——当他们惊叹"原来科研还可以这样去做"的那一刻，这种认知上的破壁和解放，远比 Skills 本身更让我觉得有意义。',
     quoteAttr: '—— <strong>袁一哲</strong>，Nature Skills 创立者',
@@ -1754,7 +1753,7 @@ const i18n = {
     installTitle: 'Choose Your Platform, Get Started Now',
     installDesc: 'Nature Skills supports Claude Code, Codex, OpenClaw, OpenCode, Hermes, and other mainstream AI agent platforms.',
     installCCDesc: 'Recommended: use subagent wrappers to preserve the full directory structure.',
-    installCodexDesc: 'Use the built-in script for one-click installation or updates of all skills.',
+    installCodexDesc: 'Use npx skills to discover, install, and keep every skill updated.',
 
     quoteText: 'Nature Skills is not the success of a tool, but the beginning of a new way of thinking spreading among people. I have witnessed many people complete a paradigm shift in research — when they exclaim "so research can be done this way," that breakthrough in understanding and liberation of thought matters far more to me than the skills themselves.',
     quoteAttr: '— <strong>Yizhe Yuan</strong>, Founder of Nature Skills',

@@ -82,11 +82,60 @@
 
 ## 安装
 
-`nature-skills` 是一组围绕 `SKILL.md` 组织的可复用技能包。`skills/` 下的每个顶层技能目录都是一个可安装单元，例如 `nature-*`；`skills/_shared/` 是共享内容目录，安装完整仓库时也需要保留。
+`nature-skills` 是一组围绕 `SKILL.md` 组织的可复用技能包。`skills/` 下的每个顶层技能目录都是一个可安装单元，例如 `nature-*`；`nature-shared` 是供其他技能读取的共享支持包。
+
+### 使用 npx skills 安装和更新
+
+需要先安装 [Node.js 18 或更高版本](https://nodejs.org/)。无需全局安装 CLI；先查看仓库中可安装的技能名：
+
+```bash
+npx skills add Yuan1z0825/nature-skills --list
+```
+
+把全部技能全局安装到 Codex。`nature-shared` 会随全量安装一起加入，因此依赖共享参考资料的技能也能正常工作：
+
+```bash
+npx skills add Yuan1z0825/nature-skills --global --agent codex --skill '*' --yes --copy
+```
+
+只为当前项目安装一个独立技能时，省略 `--global`。例如：
+
+```bash
+npx skills add Yuan1z0825/nature-skills --agent codex --skill nature-figure --yes --copy
+```
+
+单独安装 `nature-reader`、`nature-paper2ppt`、`nature-polishing` 或 `nature-writing` 时，同时选择共享支持包：
+
+```bash
+npx skills add Yuan1z0825/nature-skills --global --agent codex \
+  --skill nature-reader --skill nature-shared --yes --copy
+```
+
+也可以把全部技能安装到 CLI 支持的所有 agent：
+
+```bash
+npx skills add Yuan1z0825/nature-skills --all
+```
+
+检查全局安装结果并更新：
+
+```bash
+npx skills list --global --agent codex --json
+npx skills update --global --yes
+```
+
+只更新一个技能，或只更新当前项目中的技能：
+
+```bash
+npx skills update nature-reader --global --yes
+npx skills update --project --yes
+```
+
+技能选择参数使用 `--list` 显示的 frontmatter 名称；例如目录 `nature-proposal-writer` 当前显示为 `researchwrite`。`npx skills` 管理的是技能文件，Python、R、浏览器或 MCP 等可选运行依赖仍需按下文说明单独配置。
 
 ### Claude Code 安装方式
 
-Claude Code 不能直接使用 `scripts/update-codex-skills.sh`，因为这个脚本只负责同步到 Codex 的 `~/.codex/skills/`。用于 Claude Code 时，推荐保留一个稳定的本地 clone，再用 subagent 或 slash command 指向真实的 `skills/*/SKILL.md`。这样不会破坏技能目录结构，也能继续读取 `references/`、`static/`、`manifest.yaml`、脚本、资产和 `skills/_shared/`。
+Claude Code 不能直接使用 `scripts/update-codex-skills.sh`，因为这个脚本只负责同步到 Codex 的 `~/.codex/skills/`。用于 Claude Code 时，推荐保留一个稳定的本地 clone，再用 subagent 或 slash command 指向真实的 `skills/*/SKILL.md`。这样不会破坏技能目录结构，也能继续读取 `references/`、`static/`、`manifest.yaml`、脚本、资产和 `skills/nature-shared/`。
 
 如果还没有安装 Claude Code：
 
@@ -114,7 +163,7 @@ description: Use for Chinese-English paper reading, figure-aware translation, an
 ---
 
 When invoked, first read `~/ai-skills/nature-skills/skills/nature-reader/SKILL.md` and follow it as the governing workflow.
-Read supporting files from `~/ai-skills/nature-skills/skills/nature-reader/` and `~/ai-skills/nature-skills/skills/_shared/` only when needed.
+Read supporting files from `~/ai-skills/nature-skills/skills/nature-reader/` and `~/ai-skills/nature-skills/skills/nature-shared/` only when needed.
 Do not replace this skill with a generic paper-reading response.
 EOF
 ```
@@ -131,7 +180,7 @@ Use the nature-reader subagent to turn this paper into a Chinese-English Markdow
 mkdir -p ~/.claude/commands
 cat > ~/.claude/commands/nature-reader.md <<'EOF'
 Read `~/ai-skills/nature-skills/skills/nature-reader/SKILL.md` first and follow it strictly.
-Read directly needed supporting files from `~/ai-skills/nature-skills/skills/nature-reader/` and `~/ai-skills/nature-skills/skills/_shared/`.
+Read directly needed supporting files from `~/ai-skills/nature-skills/skills/nature-reader/` and `~/ai-skills/nature-skills/skills/nature-shared/`.
 
 $ARGUMENTS
 EOF
@@ -200,7 +249,7 @@ https://github.com/Yuan1z0825/nature-skills.git
 只安装这个仓库里的 nature-reader：
 https://github.com/Yuan1z0825/nature-skills.git
 
-如果该技能需要共享文件，也请一并安装 skills/_shared。
+如果该技能需要共享文件，也请一并安装 skills/nature-shared。
 ```
 
 关键规则：保留完整目录结构。请复制或引用整个技能文件夹，而不是只复制 `SKILL.md`，因为许多技能依赖 `references/`、`static/`、`manifest.yaml`、脚本、资产或共享文件。
@@ -234,7 +283,7 @@ python -m pip install -r skills/nature-academic-search/mcp-server/requirements.t
 
 ```text
 skills/
-├── _shared/              # 当技能引用 ../_shared 时需要保留
+├── nature-shared/              # 当技能引用 ../nature-shared 时需要保留
 ├── nature-<topic>/
 │   ├── README.md
 │   ├── README_EN.md
@@ -255,12 +304,12 @@ skills/
 
 OpenClaw、OpenCode、Hermes 的具体接入方式见 [OpenClaw / OpenCode / Hermes 接入教程](docs/open-source-agent-frameworks.md)。
 
-用于其他 agent 时，建议保留一个稳定的仓库 clone，再创建轻量 subagent、slash command 或 custom prompt wrapper，指向真实的 `skills/*/SKILL.md`，并保留 `skills/_shared/`。
+用于其他 agent 时，建议保留一个稳定的仓库 clone，再创建轻量 subagent、slash command 或 custom prompt wrapper，指向真实的 `skills/*/SKILL.md`，并保留 `skills/nature-shared/`。
 
 手动或其他 agent 使用时：
 
 1. 将完整技能目录复制到你的 prompt library 或项目中。
-2. 保留 `SKILL.md`、`manifest.yaml`、`static/`、`references/`、脚本、资产和需要的 `skills/_shared/` 文件。
+2. 保留 `SKILL.md`、`manifest.yaml`、`static/`、`references/`、脚本、资产和需要的 `skills/nature-shared/` 文件。
 3. 如目标 agent 有自己的格式要求，可调整 frontmatter 和正文结构。
 
 ## Star 历史
@@ -269,7 +318,7 @@ OpenClaw、OpenCode、Hermes 的具体接入方式见 [OpenClaw / OpenCode / Her
 
 ## 技能索引
 
-当前 `skills/` 下包含以下可触发技能；`skills/_shared/` 是共享内容目录，不计入技能索引。点击技能名或“详情页”可以进入每个 skill 的单独说明页面。
+当前 `skills/` 下包含以下可触发技能；`skills/nature-shared/` 是共享内容目录，不计入技能索引。点击技能名或“详情页”可以进入每个 skill 的单独说明页面。
 
 | 技能 | 状态 | 用途 | 触发词 | 详情页 |
 |-------|--------|---------|-----------------|--------|

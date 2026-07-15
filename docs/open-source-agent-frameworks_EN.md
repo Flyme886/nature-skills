@@ -20,7 +20,7 @@ git pull
 Rules:
 
 1. Keep the complete skill directory, such as `skills/nature-reader/`; do not copy only `SKILL.md`.
-2. Keep sibling shared content in `skills/_shared/` when a skill references it.
+2. Keep sibling shared content in `skills/nature-shared/` when a skill references it.
 3. Skills that use scripts, MCP services, or APIs still require their own dependencies, environment variables, and local credentials.
 
 ## OpenClaw
@@ -36,7 +36,7 @@ Use symlinks to point OpenClaw at the stable clone:
 ```bash
 mkdir -p ~/.openclaw/workspace/skills
 ln -s ~/ai-skills/nature-skills/skills/nature-reader ~/.openclaw/workspace/skills/nature-reader
-ln -s ~/ai-skills/nature-skills/skills/_shared ~/.openclaw/workspace/skills/_shared
+ln -s ~/ai-skills/nature-skills/skills/nature-shared ~/.openclaw/workspace/skills/nature-shared
 ```
 
 Add more skills by linking more `nature-*` directories:
@@ -50,7 +50,7 @@ If symlinks are inconvenient, copy the full directories instead:
 
 ```bash
 cp -R ~/ai-skills/nature-skills/skills/nature-reader ~/.openclaw/workspace/skills/
-cp -R ~/ai-skills/nature-skills/skills/_shared ~/.openclaw/workspace/skills/
+cp -R ~/ai-skills/nature-skills/skills/nature-shared ~/.openclaw/workspace/skills/
 ```
 
 When using copy-based installation, copy the directories again after repository updates.
@@ -63,7 +63,7 @@ OpenCode can discover skills from project or global `.agents/skills/**/SKILL.md`
 mkdir -p ~/.agents/skills
 ln -s ~/ai-skills/nature-skills/skills/nature-reader ~/.agents/skills/nature-reader
 ln -s ~/ai-skills/nature-skills/skills/nature-polishing ~/.agents/skills/nature-polishing
-ln -s ~/ai-skills/nature-skills/skills/_shared ~/.agents/skills/_shared
+ln -s ~/ai-skills/nature-skills/skills/nature-shared ~/.agents/skills/nature-shared
 ```
 
 For a single project, place the links under that project's `.agents/skills/`:
@@ -72,7 +72,7 @@ For a single project, place the links under that project's `.agents/skills/`:
 cd /path/to/your/project
 mkdir -p .agents/skills
 ln -s ~/ai-skills/nature-skills/skills/nature-reader .agents/skills/nature-reader
-ln -s ~/ai-skills/nature-skills/skills/_shared .agents/skills/_shared
+ln -s ~/ai-skills/nature-skills/skills/nature-shared .agents/skills/nature-shared
 ```
 
 Newer OpenCode configs can also declare an additional skills path in `opencode.json` or `opencode.jsonc`:
@@ -128,7 +128,7 @@ If you do not want Hermes to scan the external repository directly, copy selecte
 mkdir -p ~/.hermes/skills/research
 cp -R ~/ai-skills/nature-skills/skills/nature-reader ~/.hermes/skills/research/
 cp -R ~/ai-skills/nature-skills/skills/nature-polishing ~/.hermes/skills/research/
-cp -R ~/ai-skills/nature-skills/skills/_shared ~/.hermes/skills/research/_shared
+cp -R ~/ai-skills/nature-skills/skills/nature-shared ~/.hermes/skills/research/nature-shared
 ```
 
 Note that Hermes external skill directories are not a read-only protection boundary. If the external directory is writable by Hermes and you allow skill edits, Hermes may modify files in place. For shared team directories or upstream clones, keep them read-only or copy selected skills into `~/.hermes/skills/`.
@@ -154,7 +154,6 @@ mkdir -p ~/.agents/skills
 for skill in ~/ai-skills/nature-skills/skills/nature-*; do
   ln -s "$skill" ~/.agents/skills/"$(basename "$skill")"
 done
-ln -s ~/ai-skills/nature-skills/skills/_shared ~/.agents/skills/_shared
 ```
 
 This example uses OpenCode's global `.agents/skills` directory. For OpenClaw, replace the target with `~/.openclaw/workspace/skills`; for Hermes, prefer `external_dirs`.

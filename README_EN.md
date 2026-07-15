@@ -118,8 +118,63 @@ know the skill name, explicitly say "use `nature-reader`" or "use
 
 `nature-skills` is a collection of reusable skill packages organized around
 `SKILL.md`. Each top-level skill directory under `skills/` is an installable unit,
-such as `nature-*`; `skills/_shared/` contains shared content and should also be
-kept when installing the complete repository.
+such as `nature-*`; `nature-shared` is an installable support package read by
+other skills.
+
+### Install and update with npx skills
+
+Install [Node.js 18 or later](https://nodejs.org/) first. The CLI does not need
+to be installed globally. List the skill names available in this repository:
+
+```bash
+npx skills add Yuan1z0825/nature-skills --list
+```
+
+Install every skill globally for Codex. The complete selection includes
+`nature-shared`, so skills that use the common references remain functional:
+
+```bash
+npx skills add Yuan1z0825/nature-skills --global --agent codex --skill '*' --yes --copy
+```
+
+Omit `--global` to install one independent skill in the current project:
+
+```bash
+npx skills add Yuan1z0825/nature-skills --agent codex --skill nature-figure --yes --copy
+```
+
+When installing `nature-reader`, `nature-paper2ppt`, `nature-polishing`, or
+`nature-writing` alone, select the shared support package as well:
+
+```bash
+npx skills add Yuan1z0825/nature-skills --global --agent codex \
+  --skill nature-reader --skill nature-shared --yes --copy
+```
+
+Install all skills for every agent supported by the CLI:
+
+```bash
+npx skills add Yuan1z0825/nature-skills --all
+```
+
+Verify the global Codex installation and update it later:
+
+```bash
+npx skills list --global --agent codex --json
+npx skills update --global --yes
+```
+
+Update one skill, or update only the current project's skills:
+
+```bash
+npx skills update nature-reader --global --yes
+npx skills update --project --yes
+```
+
+Pass the frontmatter name displayed by `--list` to `--skill`; for example, the
+`nature-proposal-writer` directory is currently listed as `researchwrite`.
+`npx skills` manages skill files only. Optional Python, R, browser, and MCP
+runtime dependencies still need the separate setup described below.
 
 ### Claude Code Installation
 
@@ -128,7 +183,7 @@ script only syncs skills into Codex's `~/.codex/skills/`. For Claude Code, keep 
 stable local clone and create a subagent or slash command wrapper that points to
 the real `skills/*/SKILL.md`. This preserves the skill directory structure and
 lets the workflow keep using `references/`, `static/`, `manifest.yaml`, scripts,
-assets, and `skills/_shared/`.
+assets, and `skills/nature-shared/`.
 
 If Claude Code is not installed yet:
 
@@ -157,7 +212,7 @@ description: Use for Chinese-English paper reading, figure-aware translation, an
 ---
 
 When invoked, first read `~/ai-skills/nature-skills/skills/nature-reader/SKILL.md` and follow it as the governing workflow.
-Read supporting files from `~/ai-skills/nature-skills/skills/nature-reader/` and `~/ai-skills/nature-skills/skills/_shared/` only when needed.
+Read supporting files from `~/ai-skills/nature-skills/skills/nature-reader/` and `~/ai-skills/nature-skills/skills/nature-shared/` only when needed.
 Do not replace this skill with a generic paper-reading response.
 EOF
 ```
@@ -174,7 +229,7 @@ If you prefer a slash command, create a command wrapper instead:
 mkdir -p ~/.claude/commands
 cat > ~/.claude/commands/nature-reader.md <<'EOF'
 Read `~/ai-skills/nature-skills/skills/nature-reader/SKILL.md` first and follow it strictly.
-Read directly needed supporting files from `~/ai-skills/nature-skills/skills/nature-reader/` and `~/ai-skills/nature-skills/skills/_shared/`.
+Read directly needed supporting files from `~/ai-skills/nature-skills/skills/nature-reader/` and `~/ai-skills/nature-skills/skills/nature-shared/`.
 
 $ARGUMENTS
 EOF
@@ -250,7 +305,7 @@ To install only one skill, specify the skill name:
 Install only nature-reader from this repository:
 https://github.com/Yuan1z0825/nature-skills.git
 
-If the skill needs shared files, install skills/_shared as well.
+If the skill needs shared files, install skills/nature-shared as well.
 ```
 
 Key rule: keep the full directory structure. Many skills depend on
@@ -288,7 +343,7 @@ For OpenClaw, OpenCode, Hermes, and other open-source agent frameworks, see the 
 
 ```text
 skills/
-├── _shared/              # keep this when skills reference ../_shared
+├── nature-shared/              # keep this when skills reference ../nature-shared
 ├── nature-<topic>/
 │   ├── README.md
 │   ├── README_EN.md
@@ -311,13 +366,13 @@ For OpenClaw, OpenCode, and Hermes, see the dedicated [integration guide](docs/o
 
 For other agents, keep a stable repository clone and create a lightweight
 subagent, slash command, or custom prompt wrapper that points to the real
-`skills/*/SKILL.md` files. Preserve `skills/_shared/`.
+`skills/*/SKILL.md` files. Preserve `skills/nature-shared/`.
 
 For manual or other-agent use:
 
 1. Copy complete skill directories into your prompt library or project.
 2. Preserve `SKILL.md`, `manifest.yaml`, `static/`, `references/`, scripts,
-   assets, and required `skills/_shared/` files.
+   assets, and required `skills/nature-shared/` files.
 3. If the target agent has its own format requirements, adjust the frontmatter
    and body structure.
 
@@ -328,7 +383,7 @@ For manual or other-agent use:
 ## Skill Index
 
 The current `skills/` directory contains the following triggerable skills.
-`skills/_shared/` is shared content and is not counted in the skill index. Click a skill name or the "Details" link to open its dedicated documentation page.
+`skills/nature-shared/` is shared content and is not counted in the skill index. Click a skill name or the "Details" link to open its dedicated documentation page.
 
 | Skill | Status | Purpose | Example Triggers | Details |
 |---|---|---|---|---|

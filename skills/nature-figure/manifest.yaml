@@ -9,7 +9,7 @@ description: >
   material stays in on-demand references.
 
 always_load:
-  # Skill-local core (figure does not use the prose-oriented _shared layer)
+  # Skill-local core (figure does not use the prose-oriented nature-shared layer)
   - static/core/contract.md
   - static/core/stance.md
 
