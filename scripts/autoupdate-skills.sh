@@ -92,12 +92,17 @@ run_guarded() {
   kill "$watch" 2>/dev/null; wait "$watch" 2>/dev/null
   return "$rc"
 }
-git_slow="git -c http.lowSpeedLimit=1024 -c http.lowSpeedTime=20 -C $REPO_ROOT"
+git_slow=(
+  git
+  -c http.lowSpeedLimit=1024
+  -c http.lowSpeedTime=20
+  -C "$REPO_ROOT"
+)
 
 before=$(git -C "$REPO_ROOT" rev-parse HEAD 2>/dev/null || echo none)
 
 # Fast-forward the clone. A failure here (offline, blocked, diverged) is non-fatal.
-if ! run_guarded 60 $git_slow pull --ff-only >>"$LOG" 2>&1; then
+if ! run_guarded 60 "${git_slow[@]}" pull --ff-only >>"$LOG" 2>&1; then
   log "pull failed — skip (offline, blocked, or diverged clone)"
   exit 0
 fi

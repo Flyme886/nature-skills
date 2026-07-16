@@ -246,7 +246,7 @@ git clone https://github.com/Yuan1z0825/nature-skills.git ~/ai-skills/nature-ski
 
 `async: true` 让它在后台运行、不阻塞启动。脚本自带保护：默认 6 小时内不重复联网检查、断网或拉取失败自动跳过（`exit 0`，绝不卡住会话）、只有上游 HEAD 真正变化时才重新同步、并且拒绝在有未提交改动的 clone 上强行前进。拉到的新版会在**下一次**开启会话时生效（当前会话的技能已经加载完毕）。运行日志在 `~/.local/state/nature-skills/autoupdate.log`。
 
-目标目录与检查频率都可配置，因此 Codex 用户也可以把它加进 shell profile 或 cron：
+目标目录与检查频率都可配置：
 
 ```bash
 # 默认同步到 ~/.claude/skills；用 --dest 指到别处，例如 Codex：
@@ -254,6 +254,45 @@ git clone https://github.com/Yuan1z0825/nature-skills.git ~/ai-skills/nature-ski
 # 只在最多每小时检查一次：
 ~/ai-skills/nature-skills/scripts/autoupdate-skills.sh --throttle 3600
 ```
+
+### Codex 自动更新（可选）
+
+Codex 支持全局 `SessionStart` hook。保留一个专用 clone 后，可以在每次启动或恢复 Codex 会话时检查更新，并把新版同步到 `~/.codex/skills/`。
+
+先创建专用 clone 并完成首次同步：
+
+```bash
+mkdir -p ~/.codex
+git clone https://github.com/Yuan1z0825/nature-skills.git ~/.codex/.nature-skills-src
+~/.codex/.nature-skills-src/scripts/autoupdate-skills.sh \
+  --dest ~/.codex/skills --force
+```
+
+然后创建或合并 `~/.codex/hooks.json`：
+
+```json
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/bash \"$HOME/.codex/.nature-skills-src/scripts/autoupdate-skills.sh\" --dest \"$HOME/.codex/skills\"",
+            "timeout": 75,
+            "statusMessage": "Checking Nature Skills updates"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+若 `hooks.json` 中已有其他 hook，请合并 `SessionStart` 项，不要整体覆盖。首次启用或修改 hook 后，在 Codex 中运行 `/hooks` 检查并信任它。Codex 当前按同步方式执行 command hook，因此这里依靠脚本自带的 6 小时节流、60 秒网络保护和断网自动跳过，避免每次会话都重复联网或因更新失败阻断启动。
+
+更新日志位于 `~/.local/state/nature-skills/autoupdate.log`。拉取到的新技能通常在下一次会话中完整生效。
 
 ### Codex 安装方式
 

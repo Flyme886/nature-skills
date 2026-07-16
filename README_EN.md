@@ -310,8 +310,7 @@ fast-forward a clone that has uncommitted changes. New skills take effect on the
 **next** session (the current one already loaded its skills). Logs go to
 `~/.local/state/nature-skills/autoupdate.log`.
 
-The destination and check interval are both configurable, so Codex users can add
-it to a shell profile or cron as well:
+The destination and check interval are both configurable:
 
 ```bash
 # Defaults to ~/.claude/skills; use --dest for another location, e.g. Codex:
@@ -319,6 +318,53 @@ it to a shell profile or cron as well:
 # Check at most once per hour:
 ~/ai-skills/nature-skills/scripts/autoupdate-skills.sh --throttle 3600
 ```
+
+### Codex Auto-Update (Optional)
+
+Codex supports a global `SessionStart` hook. With a dedicated clone, it can check
+for updates whenever a Codex session starts or resumes and sync new versions into
+`~/.codex/skills/`.
+
+Create the dedicated clone and perform the initial sync:
+
+```bash
+mkdir -p ~/.codex
+git clone https://github.com/Yuan1z0825/nature-skills.git ~/.codex/.nature-skills-src
+~/.codex/.nature-skills-src/scripts/autoupdate-skills.sh \
+  --dest ~/.codex/skills --force
+```
+
+Then create or merge `~/.codex/hooks.json`:
+
+```json
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/bash \"$HOME/.codex/.nature-skills-src/scripts/autoupdate-skills.sh\" --dest \"$HOME/.codex/skills\"",
+            "timeout": 75,
+            "statusMessage": "Checking Nature Skills updates"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+If `hooks.json` already contains other hooks, merge the `SessionStart` entry
+instead of replacing the file. After enabling or changing the hook, run `/hooks`
+in Codex to review and trust it. Codex currently runs command hooks synchronously,
+so this setup relies on the script's built-in 6-hour throttle, 60-second network
+guard, and offline-safe exit to avoid repeated network checks or blocking startup
+when an update cannot be fetched.
+
+Logs are written to `~/.local/state/nature-skills/autoupdate.log`. Newly fetched
+skills normally take full effect in the next session.
 
 ### Codex Installation
 
