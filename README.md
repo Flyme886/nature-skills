@@ -29,10 +29,12 @@
    <img width="300" height="400" alt="1591" src="https://github.com/user-attachments/assets/64e37909-0a48-4bfb-8471-c2aff971a0f6" />
 
 * 仓库自营：
-* 专注做ChatGPT Plus/Pro代充/成品号平台，提供正规发票     https://apiciyuan.top/cat/3
+* 专注做ChatGPT Plus/Pro代充/成品号平台，提供正规发票，下单时可选稳定质保服务     https://apiciyuan.top/cat/3
 * 客服微信：naturegpt888（咨询/发票）   https://apiciyuan.top/cat/3
 * 
-  <img width="325" height="256" alt="image" src="https://github.com/user-attachments/assets/0c7bc267-cedb-4c54-bdb5-a3b9a6a51848" />
+  <img width="325" height="256" alt="image" src="https://github.com/user-attachments/assets/0c7bc267-cedb-4c54-bdb5-a3b9a6a51848" />        *  <img width="300" height="350" alt="图片4" src="https://github.com/user-attachments/assets/da1606cf-2a45-4aa4-8fc4-5bda04f5c9b4" />
+
+  
 
 
 ## 目录
