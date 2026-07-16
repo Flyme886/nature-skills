@@ -32,7 +32,7 @@
 - 章节大纲、claim-evidence map 或可粘贴正文。
 - 对 novelty、significance、证据链和读者路径的修改建议。
 - 需要作者确认的事实、引用或图表说明。
-- 首次投稿材料包、缺失信息清单和 `ready / ready_with_author_checks / blocked` 状态。
+- 首次投稿材料包、可编辑 LaTeX 模板、缺失信息清单和 `ready / ready_with_author_checks / blocked` 状态。
 
 ## 边界
 

@@ -12,7 +12,8 @@ Use this reference for first-submission materials before peer review. Journal in
 6. Declarations
 7. Reviewer suggestions
 8. Completeness audit
-9. Output format
+9. LaTeX templates
+10. Output format
 
 ## 1. Intake and routing
 
@@ -162,7 +163,27 @@ Readiness:
 - `ready_with_author_checks`: drafts are complete but administrative facts need confirmation.
 - `blocked`: required ethics, authorship, permissions, integrity, or journal-rule information is missing.
 
-## 9. Output format
+## 9. LaTeX templates
+
+Use these only for initial submission:
+
+| Template | Purpose |
+|---|---|
+| `templates/submission/initial-cover-letter.tex` | Initial editor-facing cover letter |
+| `templates/submission/title-page.tex` | Identified title page and declarations |
+| `templates/submission/highlights-and-summary.tex` | Highlights and editorial/significance summary |
+| `templates/submission/declarations-and-reviewers.tex` | Submission declarations and reviewer suggestions |
+
+When producing LaTeX:
+
+- Copy only the requested templates into the user's delivery folder.
+- Replace placeholders only with author-confirmed facts.
+- Keep unresolved facts visibly marked as `AUTHOR_INPUT_NEEDED`.
+- Check journal instructions before deciding which declarations belong on the title page or in separate files.
+- Compile when a LaTeX engine is available and report any missing package or compilation error.
+- Never reuse `nature-response/templates/cover-letter.tex`; that template is explicitly for a revised manuscript.
+
+## 10. Output format
 
 Return:
 

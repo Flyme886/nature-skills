@@ -23,5 +23,6 @@ Use this task only before the first editorial decision. Read `references/submiss
 - Suggested/opposed reviewer table when requested.
 - Related-manuscript, preprint, originality, permissions, and reporting-checklist prompts.
 - Submission completeness matrix.
+- Filled LaTeX deliverables from `templates/submission/` when the user requests `.tex` files.
 
 Graphical abstracts and TOC graphics belong to `nature-figure`. Revision cover letters and rebuttals belong to `nature-response`.

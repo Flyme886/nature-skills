@@ -32,7 +32,7 @@
 - Section outline, claim-evidence map, or ready-to-paste prose.
 - Revision suggestions for novelty, significance, evidence chain, and reader path.
 - Facts, references, or figure notes requiring author confirmation.
-- Initial-submission materials, a missing-input checklist, and a `ready / ready_with_author_checks / blocked` status.
+- Initial-submission materials, editable LaTeX templates, a missing-input checklist, and a `ready / ready_with_author_checks / blocked` status.
 
 ## Boundaries
 
