@@ -35,6 +35,21 @@
 - Knowledge Planet: `Nature Skills` and the philosophy behind it.
 <img width="300" height="400" alt="1591" src="https://github.com/user-attachments/assets/64e37909-0a48-4bfb-8471-c2aff971a0f6" />
 
+## Table of Contents
+
+- [Quick Start](#quick-start)
+- [Main Contributors](#main-contributors)
+- [Some Personal Views](#some-personal-views)
+- [Installation](#installation)
+  - [npx skills Installation](#npx-skills-installation)
+  - [Claude Code Installation](#claude-code-installation)
+  - [Codex Installation](#codex-installation)
+  - [Other Agent Scenarios](#other-agent-scenarios)
+- [Directory Layout](#directory-layout)
+- [Skill Index](#skill-index)
+- [Shared Design Principles](#shared-design-principles)
+- [Adding a Skill](#adding-a-skill)
+- [Star History](#star-history)
 
 ## Quick Start
 

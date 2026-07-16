@@ -27,6 +27,21 @@
 * 知识星球名称：Nature Skills以及背后的哲学！
  <img width="300" height="400" alt="1591" src="https://github.com/user-attachments/assets/64e37909-0a48-4bfb-8471-c2aff971a0f6" />
 
+## 目录
+
+- [快速开始](#快速开始)
+- [主要贡献者](#主要贡献者)
+- [自己的一些浅薄观点](#自己的一些浅薄观点)
+- [安装](#安装)
+  - [npx skills 安装方式](#npx-skills-安装方式)
+  - [Claude Code 安装方式](#claude-code-安装方式)
+  - [Codex 安装方式](#codex-安装方式)
+  - [其他 agent 场景](#其他-agent-场景)
+- [目录结构](#目录结构)
+- [技能索引](#技能索引)
+- [共享设计原则](#共享设计原则)
+- [新增技能](#新增技能)
+- [Star 历史](#star-历史)
 
 ## 快速开始
 
