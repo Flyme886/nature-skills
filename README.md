@@ -58,7 +58,7 @@
   * Email: [mhoang12205@gmail.com](mailto:mhoang12205@gmail.com)
 
 
-# 自己的一些浅薄观点
+## 自己的一些浅薄观点
 * 最近发现，我设计的Nature-skills被谷歌DeepMind关注并借鉴，他们参考了其中的引用体系、脚本思路以及技能设计哲学，推出了Science-skills。说实话，这让我挺欣慰的——当国外的顶尖AI机构开始从我们的工作中汲取灵感时，说明中国开发者的原创思想正在被世界看见。这不是被复制的失落，而是中国力量在开源土壤里生根后，自然向外生长出的影响力。
 * 我们设计Skills的重心，从来不是要求每个人都来啃透这套思想，而是这套思想本身就具备被机器理解并复用的能力。你如果想创立一个全新的Skill，或者把它适配到自己的专属领域，根本不需要从头学起——直接把Nature-Skills的GitHub地址发给Codex，它就能自动学习其中的设计精髓，帮你完成新Skill的创建和修改。这才是思想的真正解放：它不再依赖口口相传，而是通过AI直接流淌进每一个需要它的角落。
 * Nature-Skills真正的价值，或许并不在于那些具体的技能模块，而在于它悄悄推开了一扇新的大门——它让很多人第一次意识到，原来可以借助Codex或智能体来操控本地电脑做科研。我有幸见证并陪伴了许多人完成了科研范式的转变，当他们惊叹‘原来科研还可以这样去做’的那一刻，这种认知上的破壁和解放，远比Skills本身更让我觉得有意义。它不是一个工具的成功，而是一种新的思考方式开始在人群中蔓延。
@@ -204,7 +204,7 @@ git pull
 
 只要 wrapper 仍然指向这个稳定 clone 路径，就不需要重复复制技能文件。
 
-### Claude Code 自动更新（可选）
+#### 自动更新（可选）
 
 如果你希望 Claude Code 每次开启会话时自动拉取上游更新，可以用 `scripts/autoupdate-skills.sh` 配合一个 `SessionStart` 钩子。
 
@@ -254,45 +254,6 @@ git clone https://github.com/Yuan1z0825/nature-skills.git ~/ai-skills/nature-ski
 # 只在最多每小时检查一次：
 ~/ai-skills/nature-skills/scripts/autoupdate-skills.sh --throttle 3600
 ```
-
-### Codex 自动更新（可选）
-
-Codex 支持全局 `SessionStart` hook。保留一个专用 clone 后，可以在每次启动或恢复 Codex 会话时检查更新，并把新版同步到 `~/.codex/skills/`。
-
-先创建专用 clone 并完成首次同步：
-
-```bash
-mkdir -p ~/.codex
-git clone https://github.com/Yuan1z0825/nature-skills.git ~/.codex/.nature-skills-src
-~/.codex/.nature-skills-src/scripts/autoupdate-skills.sh \
-  --dest ~/.codex/skills --force
-```
-
-然后创建或合并 `~/.codex/hooks.json`：
-
-```json
-{
-  "hooks": {
-    "SessionStart": [
-      {
-        "matcher": "startup|resume",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/bin/bash \"$HOME/.codex/.nature-skills-src/scripts/autoupdate-skills.sh\" --dest \"$HOME/.codex/skills\"",
-            "timeout": 75,
-            "statusMessage": "Checking Nature Skills updates"
-          }
-        ]
-      }
-    ]
-  }
-}
-```
-
-若 `hooks.json` 中已有其他 hook，请合并 `SessionStart` 项，不要整体覆盖。首次启用或修改 hook 后，在 Codex 中运行 `/hooks` 检查并信任它。Codex 当前按同步方式执行 command hook，因此这里依靠脚本自带的 6 小时节流、60 秒网络保护和断网自动跳过，避免每次会话都重复联网或因更新失败阻断启动。
-
-更新日志位于 `~/.local/state/nature-skills/autoupdate.log`。拉取到的新技能通常在下一次会话中完整生效。
 
 ### Codex 安装方式
 
@@ -371,6 +332,44 @@ python -m pip install -r skills/nature-academic-search/mcp-server/requirements.t
 
 如果你使用 OpenClaw、OpenCode、Hermes 等开源 agent / 编程框架，请看 [OpenClaw / OpenCode / Hermes 接入教程](docs/open-source-agent-frameworks.md)。
 
+#### 自动更新（可选）
+
+Codex 支持全局 `SessionStart` hook。保留一个专用 clone 后，可以在每次启动或恢复 Codex 会话时检查更新，并把新版同步到 `~/.codex/skills/`。
+
+先创建专用 clone 并完成首次同步：
+
+```bash
+mkdir -p ~/.codex
+git clone https://github.com/Yuan1z0825/nature-skills.git ~/.codex/.nature-skills-src
+~/.codex/.nature-skills-src/scripts/autoupdate-skills.sh \
+  --dest ~/.codex/skills --force
+```
+
+然后创建或合并 `~/.codex/hooks.json`：
+
+```json
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/bash \"$HOME/.codex/.nature-skills-src/scripts/autoupdate-skills.sh\" --dest \"$HOME/.codex/skills\"",
+            "timeout": 75,
+            "statusMessage": "Checking Nature Skills updates"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+若 `hooks.json` 中已有其他 hook，请合并 `SessionStart` 项，不要整体覆盖。首次启用或修改 hook 后，在 Codex 中运行 `/hooks` 检查并信任它。Codex 当前按同步方式执行 command hook，因此这里依靠脚本自带的 6 小时节流、60 秒网络保护和断网自动跳过，避免每次会话都重复联网或因更新失败阻断启动。
+
+更新日志位于 `~/.local/state/nature-skills/autoupdate.log`。拉取到的新技能通常在下一次会话中完整生效。
 
 ### 目录结构
 

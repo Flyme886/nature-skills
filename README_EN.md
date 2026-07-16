@@ -71,7 +71,7 @@ know the skill name, explicitly say "use `nature-reader`" or "use
   - GitHub: [Flyme886](https://github.com/Flyme886)
   - Email: [mhoang12205@gmail.com](mailto:mhoang12205@gmail.com)
 
-# Some Personal Views
+## Some Personal Views
 
 - Recently, I noticed that the Nature Skills design has drawn attention from
   Google DeepMind and has been referenced by them. They drew on its citation
@@ -257,7 +257,7 @@ git pull
 As long as the wrapper still points to this stable clone path, no repeated file
 copy is needed.
 
-### Claude Code Auto-Update (Optional)
+#### Auto-Update (Optional)
 
 If you want Claude Code to pull upstream updates automatically on every session
 start, use `scripts/autoupdate-skills.sh` together with a `SessionStart` hook.
@@ -318,53 +318,6 @@ The destination and check interval are both configurable:
 # Check at most once per hour:
 ~/ai-skills/nature-skills/scripts/autoupdate-skills.sh --throttle 3600
 ```
-
-### Codex Auto-Update (Optional)
-
-Codex supports a global `SessionStart` hook. With a dedicated clone, it can check
-for updates whenever a Codex session starts or resumes and sync new versions into
-`~/.codex/skills/`.
-
-Create the dedicated clone and perform the initial sync:
-
-```bash
-mkdir -p ~/.codex
-git clone https://github.com/Yuan1z0825/nature-skills.git ~/.codex/.nature-skills-src
-~/.codex/.nature-skills-src/scripts/autoupdate-skills.sh \
-  --dest ~/.codex/skills --force
-```
-
-Then create or merge `~/.codex/hooks.json`:
-
-```json
-{
-  "hooks": {
-    "SessionStart": [
-      {
-        "matcher": "startup|resume",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/bin/bash \"$HOME/.codex/.nature-skills-src/scripts/autoupdate-skills.sh\" --dest \"$HOME/.codex/skills\"",
-            "timeout": 75,
-            "statusMessage": "Checking Nature Skills updates"
-          }
-        ]
-      }
-    ]
-  }
-}
-```
-
-If `hooks.json` already contains other hooks, merge the `SessionStart` entry
-instead of replacing the file. After enabling or changing the hook, run `/hooks`
-in Codex to review and trust it. Codex currently runs command hooks synchronously,
-so this setup relies on the script's built-in 6-hour throttle, 60-second network
-guard, and offline-safe exit to avoid repeated network checks or blocking startup
-when an update cannot be fetched.
-
-Logs are written to `~/.local/state/nature-skills/autoupdate.log`. Newly fetched
-skills normally take full effect in the next session.
 
 ### Codex Installation
 
@@ -451,6 +404,53 @@ Create a Chinese PPT deck from this paper.
 ```
 
 For OpenClaw, OpenCode, Hermes, and other open-source agent frameworks, see the [OpenClaw / OpenCode / Hermes integration guide](docs/open-source-agent-frameworks_EN.md).
+
+#### Auto-Update (Optional)
+
+Codex supports a global `SessionStart` hook. With a dedicated clone, it can check
+for updates whenever a Codex session starts or resumes and sync new versions into
+`~/.codex/skills/`.
+
+Create the dedicated clone and perform the initial sync:
+
+```bash
+mkdir -p ~/.codex
+git clone https://github.com/Yuan1z0825/nature-skills.git ~/.codex/.nature-skills-src
+~/.codex/.nature-skills-src/scripts/autoupdate-skills.sh \
+  --dest ~/.codex/skills --force
+```
+
+Then create or merge `~/.codex/hooks.json`:
+
+```json
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/bash \"$HOME/.codex/.nature-skills-src/scripts/autoupdate-skills.sh\" --dest \"$HOME/.codex/skills\"",
+            "timeout": 75,
+            "statusMessage": "Checking Nature Skills updates"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+If `hooks.json` already contains other hooks, merge the `SessionStart` entry
+instead of replacing the file. After enabling or changing the hook, run `/hooks`
+in Codex to review and trust it. Codex currently runs command hooks synchronously,
+so this setup relies on the script's built-in 6-hour throttle, 60-second network
+guard, and offline-safe exit to avoid repeated network checks or blocking startup
+when an update cannot be fetched.
+
+Logs are written to `~/.local/state/nature-skills/autoupdate.log`. Newly fetched
+skills normally take full effect in the next session.
 
 ### Directory Layout
 
