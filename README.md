@@ -26,19 +26,11 @@
 * 面向全球AI学者收录通用科研skill，nature-skills是skill期刊的雏形，不以讲故事假大空的科研为目标，这里只在乎能否真正解决领域问题！
 * 知识星球名称：Nature Skills以及背后的哲学！
 
-   <img width="300" height="400" alt="1591" src="https://github.com/user-attachments/assets/64e37909-0a48-4bfb-8471-c2aff971a0f6" />
-
-* 仓库自营：
-* 专注做ChatGPT Plus/Pro代充/成品号平台，提供正规发票，下单时可选稳定质保服务     https://apiciyuan.top/cat/3
-* 客服微信：naturegpt888（咨询/发票）   https://apiciyuan.top/cat/3
-* 
-  <img width="325" height="256" alt="image" src="https://github.com/user-attachments/assets/0c7bc267-cedb-4c54-bdb5-a3b9a6a51848" />        *  <img width="300" height="350" alt="图片4" src="https://github.com/user-attachments/assets/da1606cf-2a45-4aa4-8fc4-5bda04f5c9b4" />
-
-  
-
+<img width="300" height="400" alt="Nature Skills 知识星球" src="https://github.com/user-attachments/assets/64e37909-0a48-4bfb-8471-c2aff971a0f6" />
 
 ## 目录
 
+- [仓库自营](#仓库自营)
 - [快速开始](#快速开始)
 - [主要贡献者](#主要贡献者)
 - [自己的一些浅薄观点](#自己的一些浅薄观点)
@@ -52,6 +44,14 @@
 - [共享设计原则](#共享设计原则)
 - [新增技能](#新增技能)
 - [Star 历史](#star-历史)
+
+## 仓库自营
+
+- **服务内容**：ChatGPT Plus/Pro 代充与成品号服务，支持正规发票，并可在下单时选择稳定质保服务。
+- **服务入口**：[https://apiciyuan.top/cat/3](https://apiciyuan.top/cat/3)
+- **客服微信**：`naturegpt888`（咨询 / 发票）
+
+<img width="325" height="256" alt="ChatGPT Plus/Pro 服务" src="https://github.com/user-attachments/assets/0c7bc267-cedb-4c54-bdb5-a3b9a6a51848" />
 
 ## 快速开始
 
