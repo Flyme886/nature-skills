@@ -800,6 +800,25 @@ h3 { font-size: var(--fs-h3); }
 .installation {
   background: var(--inkwell);
   color: var(--paper);
+  position: relative;
+  overflow: hidden;
+}
+
+.installation::before {
+  content: '';
+  position: absolute;
+  width: 38rem;
+  height: 38rem;
+  top: -24rem;
+  right: -12rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(91, 140, 126, 0.12), transparent 68%);
+  pointer-events: none;
+}
+
+.installation__header {
+  max-width: 720px;
+  position: relative;
 }
 
 .installation .section-label {
@@ -808,86 +827,330 @@ h3 { font-size: var(--fs-h3); }
 
 .installation h2 { color: var(--paper); }
 
-.installation__grid {
+.installation__intro {
+  color: var(--slate-light);
+  margin-top: var(--space-md);
+  max-width: 620px;
+  text-wrap: pretty;
+}
+
+.install-platform-tabs {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-xl);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   margin-top: var(--space-xl);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  position: relative;
+  z-index: 1;
 }
 
-.install-card {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: var(--radius-lg);
-  padding: var(--space-xl);
-  transition: border-color var(--duration-fast);
+.install-platform-tab {
+  appearance: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--slate-light);
+  padding: 0.95rem 0.9rem 1.1rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  transition: color var(--duration-fast),
+              background var(--duration-fast),
+              border-color var(--duration-fast);
 }
 
-.install-card:hover {
-  border-color: rgba(255,255,255,0.15);
-}
-
-.install-card__title {
-  font-family: 'Crimson Text', serif;
-  font-size: 1.3rem;
-  font-weight: 600;
+.install-platform-tab:hover {
   color: var(--paper);
-  margin-bottom: var(--space-md);
+  background: rgba(255,255,255,0.025);
+}
+
+.install-platform-tab[aria-selected="true"] {
+  color: var(--paper);
+  border-bottom-color: var(--gold-light);
+  background: linear-gradient(180deg, transparent, rgba(200,150,62,0.06));
+}
+
+.install-platform-tab__index {
+  font-family: 'JetBrains Mono', 'Consolas', monospace;
+  font-size: 0.68rem;
+  color: var(--slate);
+  letter-spacing: 0.04em;
+}
+
+.install-platform-tab[aria-selected="true"] .install-platform-tab__index {
+  color: var(--gold-light);
+}
+
+.install-platform-tab__name {
+  font-size: var(--fs-small);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.install-panel {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1.22fr);
+  margin-top: var(--space-md);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: rgba(255,255,255,0.035);
+  box-shadow: 0 28px 80px rgba(3, 12, 24, 0.22);
+  position: relative;
+  z-index: 1;
+}
+
+.install-panel__guide {
+  padding: clamp(1.75rem, 4vw, 3rem);
+}
+
+.install-panel__eyebrow {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-}
-
-.install-card__icon {
-  font-size: 1.5rem;
-}
-
-.install-card p {
-  font-size: var(--fs-small);
-  color: var(--slate-light);
-  margin-bottom: var(--space-md);
-  line-height: 1.6;
-}
-
-.code-block {
-  background: rgba(0,0,0,0.4);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: var(--radius-md);
-  padding: var(--space-md);
-  overflow-x: auto;
+  margin-bottom: 0.75rem;
+  color: var(--gold-light);
   font-family: 'JetBrains Mono', 'Consolas', monospace;
-  font-size: var(--fs-code);
-  line-height: 1.7;
-  color: #D4D4D4;
-  white-space: pre;
-}
-
-.code-block .cmd { color: var(--gold-light); }
-.code-block .str { color: #98C379; }
-.code-block .comment { color: #6A737D; }
-
-.platforms {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-md);
-  margin-top: var(--space-xl);
-  padding-top: var(--space-xl);
-  border-top: 1px solid rgba(255,255,255,0.08);
-  justify-content: center;
-}
-
-.platform-tag {
-  padding: 0.4rem 1rem;
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 100px;
-  font-size: var(--fs-small);
-  color: var(--slate-light);
+  font-size: var(--fs-caption);
   font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-@media (max-width: 768px) {
-  .installation__grid {
+.install-panel__eyebrow::before {
+  content: '';
+  width: 1.5rem;
+  height: 1px;
+  background: currentColor;
+}
+
+.install-panel__title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.6rem;
+}
+
+.install-panel__title {
+  color: var(--paper);
+  font-size: clamp(1.7rem, 3vw, 2.25rem);
+  letter-spacing: -0.02em;
+}
+
+.install-panel__badge {
+  border-left: 2px solid var(--gold-light);
+  padding: 0.15rem 0.5rem;
+  background: rgba(200,150,62,0.08);
+  color: var(--gold-light);
+  font-size: var(--fs-caption);
+  font-weight: 600;
+}
+
+.install-panel__description {
+  color: var(--slate-light);
+  font-size: var(--fs-small);
+  line-height: 1.65;
+  max-width: 52ch;
+}
+
+.install-steps {
+  list-style: none;
+  margin-top: var(--space-lg);
+  display: grid;
+  gap: 1.15rem;
+}
+
+.install-step {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: 0.85rem;
+  position: relative;
+}
+
+.install-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 1.8rem;
+  bottom: -1rem;
+  left: 0.94rem;
+  width: 1px;
+  background: rgba(255,255,255,0.1);
+}
+
+.install-step__number {
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,0.16);
+  color: var(--gold-light);
+  font-family: 'JetBrains Mono', 'Consolas', monospace;
+  font-size: 0.68rem;
+  background: var(--inkwell-light);
+  position: relative;
+  z-index: 1;
+}
+
+.install-step__title {
+  color: var(--paper);
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.install-step__body {
+  color: var(--slate-light);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  margin-top: 0.2rem;
+}
+
+.install-doc-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: var(--space-lg);
+  color: var(--gold-light);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color var(--duration-fast), transform var(--duration-fast);
+}
+
+.install-doc-link:hover {
+  color: var(--paper);
+  transform: translateX(2px);
+}
+
+.install-panel__terminal {
+  min-width: 0;
+  background: #081321;
+  border-left: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+.install-terminal__bar {
+  min-height: 3.2rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.install-terminal__identity {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.install-terminal__dots {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.install-terminal__dots span {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+}
+
+.install-terminal__label {
+  color: var(--slate-light);
+  font-family: 'JetBrains Mono', 'Consolas', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.install-copy {
+  appearance: none;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.04);
+  color: var(--paper);
+  padding: 0.45rem 0.7rem;
+  font: 500 var(--fs-caption) 'Inter', sans-serif;
+  cursor: pointer;
+  transition: background var(--duration-fast), border-color var(--duration-fast), transform var(--duration-fast);
+  white-space: nowrap;
+}
+
+.install-copy:hover {
+  background: rgba(255,255,255,0.09);
+  border-color: rgba(255,255,255,0.24);
+}
+
+.install-copy:active { transform: translateY(1px); }
+
+.install-code {
+  margin: 0;
+  padding: clamp(1.4rem, 3vw, 2.25rem);
+  overflow: auto;
+  flex: 1;
+  color: #D8DEE9;
+  font-family: 'JetBrains Mono', 'Consolas', monospace;
+  font-size: clamp(0.72rem, 1vw, 0.82rem);
+  line-height: 1.8;
+  tab-size: 2;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.install-code .comment { color: #68798C; }
+.install-code .cmd { color: var(--gold-light); }
+
+.install-panel--refreshing {
+  animation: install-panel-in 320ms var(--ease-out-expo);
+}
+
+@keyframes install-panel-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+  .install-panel {
     grid-template-columns: 1fr;
+  }
+
+  .install-panel__terminal {
+    border-left: 0;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+}
+
+@media (max-width: 680px) {
+  .install-platform-tabs {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scroll-snap-type: x proximity;
+  }
+
+  .install-platform-tab {
+    flex: 0 0 auto;
+    min-width: 8.5rem;
+    scroll-snap-align: start;
+  }
+
+  .install-panel__guide {
+    padding: 1.5rem;
+  }
+
+  .install-terminal__bar {
+    padding-inline: 0.8rem;
+  }
+
+  .install-code {
+    padding: 1.25rem;
   }
 }
 
@@ -1369,47 +1632,38 @@ h3 { font-size: var(--fs-h3); }
 <!-- Installation -->
 <section class="section installation" id="install">
   <div class="container">
-    <span class="section-label" data-i18n="installLabel">安装指南</span>
-    <h2 data-i18n="installTitle">选择你的平台，即刻开始</h2>
-    <p style="color: var(--slate-light); margin-top: var(--space-md); max-width: 600px;" data-i18n="installDesc">
-      Nature Skills 支持 Claude Code、Codex、OpenClaw、OpenCode、Hermes 等主流 AI Agent 平台。
-    </p>
-
-    <div class="installation__grid">
-      <div class="install-card">
-        <div class="install-card__title">
-          <span class="install-card__icon">🖥️</span> Claude Code
-        </div>
-        <p data-i18n="installCCDesc">推荐使用 subagent wrapper 方式，保留完整目录结构。</p>
-        <div class="code-block"><span class="comment"># 克隆仓库</span>
-<span class="cmd">git clone</span> https://github.com/Yuan1z0825/nature-skills.git
-<span class="cmd">cd</span> nature-skills
-
-<span class="comment"># 创建 subagent wrapper（以 nature-reader 为例）</span>
-<span class="cmd">mkdir -p</span> ~/.claude/agents</div>
-      </div>
-
-      <div class="install-card">
-        <div class="install-card__title">
-          <span class="install-card__icon">⚡</span> Codex
-        </div>
-        <p data-i18n="installCodexDesc">使用 npx skills 发现、安装和持续更新全部技能。</p>
-        <div class="code-block"><span class="comment"># 查看并全局安装到 Codex</span>
-<span class="cmd">npx skills add</span> Yuan1z0825/nature-skills --list
-<span class="cmd">npx skills add</span> Yuan1z0825/nature-skills --global --agent codex --skill '*' --yes --copy
-
-<span class="comment"># 后续更新</span>
-<span class="cmd">npx skills update</span> --global --yes</div>
-      </div>
+    <div class="installation__header">
+      <span class="section-label" data-i18n="installLabel">安装指南</span>
+      <h2 data-i18n="installTitle">选择你的平台，即刻开始</h2>
+      <p class="installation__intro" data-i18n="installDesc">
+        Nature Skills 支持 Claude Code、Codex、OpenClaw、OpenCode、Hermes 等主流 AI Agent 平台。
+      </p>
     </div>
 
-    <div class="platforms">
-      <span class="platform-tag">Claude Code</span>
-      <span class="platform-tag">Codex</span>
-      <span class="platform-tag">OpenClaw</span>
-      <span class="platform-tag">OpenCode</span>
-      <span class="platform-tag">Hermes</span>
+    <div class="install-platform-tabs" id="installPlatformTabs" role="tablist" aria-label="选择安装平台">
+      <button class="install-platform-tab" type="button" role="tab" data-platform="codex" aria-controls="installPanel" aria-selected="true" tabindex="0">
+        <span class="install-platform-tab__index">01</span>
+        <span class="install-platform-tab__name">Codex</span>
+      </button>
+      <button class="install-platform-tab" type="button" role="tab" data-platform="claude" aria-controls="installPanel" aria-selected="false" tabindex="-1">
+        <span class="install-platform-tab__index">02</span>
+        <span class="install-platform-tab__name">Claude Code</span>
+      </button>
+      <button class="install-platform-tab" type="button" role="tab" data-platform="openclaw" aria-controls="installPanel" aria-selected="false" tabindex="-1">
+        <span class="install-platform-tab__index">03</span>
+        <span class="install-platform-tab__name">OpenClaw</span>
+      </button>
+      <button class="install-platform-tab" type="button" role="tab" data-platform="opencode" aria-controls="installPanel" aria-selected="false" tabindex="-1">
+        <span class="install-platform-tab__index">04</span>
+        <span class="install-platform-tab__name">OpenCode</span>
+      </button>
+      <button class="install-platform-tab" type="button" role="tab" data-platform="hermes" aria-controls="installPanel" aria-selected="false" tabindex="-1">
+        <span class="install-platform-tab__index">05</span>
+        <span class="install-platform-tab__name">Hermes</span>
+      </button>
     </div>
+
+    <div class="install-panel" id="installPanel" role="tabpanel" tabindex="0" aria-live="polite"></div>
   </div>
 </section>
 
@@ -1598,9 +1852,14 @@ const i18n = {
 
     installLabel: '安装指南',
     installTitle: '选择你的平台，即刻开始',
-    installDesc: 'Nature Skills 支持 Claude Code、Codex、OpenClaw、OpenCode、Hermes 等主流 AI Agent 平台。',
-    installCCDesc: '推荐使用 subagent wrapper 方式，保留完整目录结构。',
-    installCodexDesc: '使用 npx skills 发现、安装和持续更新全部技能。',
+    installDesc: '选择平台后，按照三个步骤完成安装、验证和后续更新。所有方式都会保留完整技能目录。',
+    installTabsAria: '选择安装平台',
+    installStepsLabel: '三步完成',
+    installTerminalLabel: '快速安装命令',
+    installCopy: '复制命令',
+    installCopied: '已复制',
+    installCopyFailed: '复制失败',
+    installDocs: '查看完整安装文档',
 
     quoteText: 'Nature Skills 不是工具的成功，而是一种新的思考方式开始在人群中蔓延。我见证了许多人完成科研范式的转变——当他们惊叹"原来科研还可以这样去做"的那一刻，这种认知上的破壁和解放，远比 Skills 本身更让我觉得有意义。',
     quoteAttr: '—— <strong>袁一哲</strong>，Nature Skills 创立者',
@@ -1751,9 +2010,14 @@ const i18n = {
 
     installLabel: 'Installation',
     installTitle: 'Choose Your Platform, Get Started Now',
-    installDesc: 'Nature Skills supports Claude Code, Codex, OpenClaw, OpenCode, Hermes, and other mainstream AI agent platforms.',
-    installCCDesc: 'Recommended: use subagent wrappers to preserve the full directory structure.',
-    installCodexDesc: 'Use npx skills to discover, install, and keep every skill updated.',
+    installDesc: 'Choose a platform, then follow three clear steps to install, verify, and keep your skills updated. Every route preserves complete skill directories.',
+    installTabsAria: 'Choose an installation platform',
+    installStepsLabel: 'Three-step setup',
+    installTerminalLabel: 'Quick install commands',
+    installCopy: 'Copy commands',
+    installCopied: 'Copied',
+    installCopyFailed: 'Copy failed',
+    installDocs: 'Read the full installation guide',
 
     quoteText: 'Nature Skills is not the success of a tool, but the beginning of a new way of thinking spreading among people. I have witnessed many people complete a paradigm shift in research — when they exclaim "so research can be done this way," that breakthrough in understanding and liberation of thought matters far more to me than the skills themselves.',
     quoteAttr: '— <strong>Yizhe Yuan</strong>, Founder of Nature Skills',
@@ -1853,6 +2117,219 @@ const i18n = {
 };
 
 let currentLang = 'zh';
+let activeInstallPlatform = 'codex';
+
+const installPlatformOrder = ['codex', 'claude', 'openclaw', 'opencode', 'hermes'];
+
+const installPlatformData = {
+  codex: {
+    name: 'Codex',
+    zh: {
+      badge: '推荐',
+      description: '通过 npx skills 发现并全局安装全部 Nature Skills，适合希望由 Codex 直接管理技能更新的用户。',
+      steps: [
+        ['查看技能', '先读取仓库中的可安装技能名称。'],
+        ['全局安装', '一次安装全部技能及共享支持包。'],
+        ['持续更新', '使用同一 CLI 拉取并同步后续版本。']
+      ],
+      code: `# 1. 查看可安装技能
+npx skills add Yuan1z0825/nature-skills --list
+
+# 2. 全局安装全部技能到 Codex
+npx skills add Yuan1z0825/nature-skills --global --agent codex --skill '*' --yes --copy
+
+# 3. 后续更新
+npx skills update --global --yes`,
+      docs: 'https://github.com/Yuan1z0825/nature-skills#53-codex-安装方式'
+    },
+    en: {
+      badge: 'Recommended',
+      description: 'Use npx skills to discover and install the complete Nature Skills library globally, with future updates managed from the same CLI.',
+      steps: [
+        ['Inspect the library', 'List the installable skill names in the repository.'],
+        ['Install globally', 'Install every skill together with its shared support package.'],
+        ['Keep it current', 'Pull and sync future versions through the same CLI.']
+      ],
+      code: `# 1. List installable skills
+npx skills add Yuan1z0825/nature-skills --list
+
+# 2. Install every skill globally for Codex
+npx skills add Yuan1z0825/nature-skills --global --agent codex --skill '*' --yes --copy
+
+# 3. Update later
+npx skills update --global --yes`,
+      docs: 'https://github.com/Yuan1z0825/nature-skills/blob/main/README_EN.md#53-codex-installation'
+    }
+  },
+  claude: {
+    name: 'Claude Code',
+    zh: {
+      badge: '完整目录',
+      description: '保留一个稳定的本地仓库，再把完整技能同步到 Claude Code 自动发现的技能目录。',
+      steps: [
+        ['克隆仓库', '把仓库放在稳定路径，避免后续 wrapper 或更新路径失效。'],
+        ['同步技能', '运行仓库脚本，将完整目录复制到 ~/.claude/skills。'],
+        ['验证并更新', '确认 SKILL.md 存在；以后拉取仓库后重新同步。']
+      ],
+      code: `# 1. 克隆到稳定路径
+git clone https://github.com/Yuan1z0825/nature-skills.git ~/ai-skills/nature-skills
+
+# 2. 首次同步全部技能
+~/ai-skills/nature-skills/scripts/autoupdate-skills.sh --force
+
+# 3. 验证安装
+test -f ~/.claude/skills/nature-reader/SKILL.md && echo "Nature Skills ready"`,
+      docs: 'https://github.com/Yuan1z0825/nature-skills#52-claude-code-安装方式'
+    },
+    en: {
+      badge: 'Full directories',
+      description: 'Keep a stable local clone, then sync complete skill directories into the location Claude Code discovers automatically.',
+      steps: [
+        ['Clone once', 'Use a stable path so wrappers and future updates never lose their source.'],
+        ['Sync the skills', 'Run the repository script to copy complete directories into ~/.claude/skills.'],
+        ['Verify and update', 'Confirm SKILL.md exists; pull and re-run the sync script for future versions.']
+      ],
+      code: `# 1. Clone to a stable path
+git clone https://github.com/Yuan1z0825/nature-skills.git ~/ai-skills/nature-skills
+
+# 2. Sync every skill once
+~/ai-skills/nature-skills/scripts/autoupdate-skills.sh --force
+
+# 3. Verify the installation
+test -f ~/.claude/skills/nature-reader/SKILL.md && echo "Nature Skills ready"`,
+      docs: 'https://github.com/Yuan1z0825/nature-skills/blob/main/README_EN.md#52-claude-code-installation'
+    }
+  },
+  openclaw: {
+    name: 'OpenClaw',
+    zh: {
+      badge: '符号链接',
+      description: '让 OpenClaw 的 workspace skill 目录指向稳定仓库，后续更新无需重复复制文件。',
+      steps: [
+        ['准备仓库', '将 Nature Skills 克隆到长期保留的本地路径。'],
+        ['连接技能', '把目标技能和 nature-shared 链接到 OpenClaw workspace。'],
+        ['后续更新', '在稳定仓库中执行 git pull，链接会自动读取新版。']
+      ],
+      code: `# 1. 准备稳定仓库
+git clone https://github.com/Yuan1z0825/nature-skills.git ~/ai-skills/nature-skills
+
+# 2. 连接一个技能及共享支持包
+mkdir -p ~/.openclaw/workspace/skills
+ln -s ~/ai-skills/nature-skills/skills/nature-reader ~/.openclaw/workspace/skills/nature-reader
+ln -s ~/ai-skills/nature-skills/skills/nature-shared ~/.openclaw/workspace/skills/nature-shared
+
+# 3. 后续更新
+git -C ~/ai-skills/nature-skills pull`,
+      docs: 'https://github.com/Yuan1z0825/nature-skills/blob/main/docs/open-source-agent-frameworks.md#openclaw'
+    },
+    en: {
+      badge: 'Symlink setup',
+      description: 'Point OpenClaw workspace skills at a stable clone so future repository updates require no repeated copying.',
+      steps: [
+        ['Prepare the clone', 'Keep Nature Skills in a stable local path.'],
+        ['Link the skills', 'Link the selected skill and nature-shared into the OpenClaw workspace.'],
+        ['Update in place', 'Run git pull in the stable clone; the links immediately expose the new version.']
+      ],
+      code: `# 1. Prepare a stable clone
+git clone https://github.com/Yuan1z0825/nature-skills.git ~/ai-skills/nature-skills
+
+# 2. Link one skill and its shared support package
+mkdir -p ~/.openclaw/workspace/skills
+ln -s ~/ai-skills/nature-skills/skills/nature-reader ~/.openclaw/workspace/skills/nature-reader
+ln -s ~/ai-skills/nature-skills/skills/nature-shared ~/.openclaw/workspace/skills/nature-shared
+
+# 3. Update later
+git -C ~/ai-skills/nature-skills pull`,
+      docs: 'https://github.com/Yuan1z0825/nature-skills/blob/main/docs/open-source-agent-frameworks_EN.md#openclaw'
+    }
+  },
+  opencode: {
+    name: 'OpenCode',
+    zh: {
+      badge: '全局发现',
+      description: '通过全局 .agents/skills 目录让所有 OpenCode 项目发现常用 Nature Skills。',
+      steps: [
+        ['准备仓库', '将完整技能库克隆到稳定的本地路径。'],
+        ['建立全局链接', '把常用技能和 nature-shared 链接到 ~/.agents/skills。'],
+        ['启动验证', '打开 OpenCode 后明确请求使用 nature-reader。']
+      ],
+      code: `# 1. 准备稳定仓库
+git clone https://github.com/Yuan1z0825/nature-skills.git ~/ai-skills/nature-skills
+
+# 2. 建立全局技能链接
+mkdir -p ~/.agents/skills
+ln -s ~/ai-skills/nature-skills/skills/nature-reader ~/.agents/skills/nature-reader
+ln -s ~/ai-skills/nature-skills/skills/nature-shared ~/.agents/skills/nature-shared
+
+# 3. 后续更新
+git -C ~/ai-skills/nature-skills pull`,
+      docs: 'https://github.com/Yuan1z0825/nature-skills/blob/main/docs/open-source-agent-frameworks.md#opencode'
+    },
+    en: {
+      badge: 'Global discovery',
+      description: 'Use the global .agents/skills directory to make selected Nature Skills available across every OpenCode project.',
+      steps: [
+        ['Prepare the clone', 'Clone the complete skill library into a stable local path.'],
+        ['Create global links', 'Link selected skills and nature-shared into ~/.agents/skills.'],
+        ['Verify in OpenCode', 'Start OpenCode and explicitly request the nature-reader skill.']
+      ],
+      code: `# 1. Prepare a stable clone
+git clone https://github.com/Yuan1z0825/nature-skills.git ~/ai-skills/nature-skills
+
+# 2. Create global skill links
+mkdir -p ~/.agents/skills
+ln -s ~/ai-skills/nature-skills/skills/nature-reader ~/.agents/skills/nature-reader
+ln -s ~/ai-skills/nature-skills/skills/nature-shared ~/.agents/skills/nature-shared
+
+# 3. Update later
+git -C ~/ai-skills/nature-skills pull`,
+      docs: 'https://github.com/Yuan1z0825/nature-skills/blob/main/docs/open-source-agent-frameworks_EN.md#opencode'
+    }
+  },
+  hermes: {
+    name: 'Hermes',
+    zh: {
+      badge: '外部目录',
+      description: '让 Hermes 直接扫描稳定仓库的 skills 目录，避免为每个技能单独复制文件。',
+      steps: [
+        ['准备仓库', '将完整仓库克隆到稳定路径。'],
+        ['声明外部目录', '在 ~/.hermes/config.yaml 中加入 skills.external_dirs。'],
+        ['更新与使用', 'git pull 后即可通过 /nature-reader 等命令使用新版。']
+      ],
+      code: `# 1. 准备稳定仓库
+git clone https://github.com/Yuan1z0825/nature-skills.git ~/ai-skills/nature-skills
+
+# 2. 在 ~/.hermes/config.yaml 中加入
+skills:
+  external_dirs:
+    - ~/ai-skills/nature-skills/skills
+
+# 3. 后续更新仓库
+git -C ~/ai-skills/nature-skills pull`,
+      docs: 'https://github.com/Yuan1z0825/nature-skills/blob/main/docs/open-source-agent-frameworks.md#hermes'
+    },
+    en: {
+      badge: 'External directory',
+      description: 'Let Hermes scan the skills directory in a stable clone instead of copying every skill separately.',
+      steps: [
+        ['Prepare the clone', 'Clone the complete repository into a stable path.'],
+        ['Declare the directory', 'Add skills.external_dirs to ~/.hermes/config.yaml.'],
+        ['Update and use', 'After git pull, invoke the new version through commands such as /nature-reader.']
+      ],
+      code: `# 1. Prepare a stable clone
+git clone https://github.com/Yuan1z0825/nature-skills.git ~/ai-skills/nature-skills
+
+# 2. Add this to ~/.hermes/config.yaml
+skills:
+  external_dirs:
+    - ~/ai-skills/nature-skills/skills
+
+# 3. Update the repository later
+git -C ~/ai-skills/nature-skills pull`,
+      docs: 'https://github.com/Yuan1z0825/nature-skills/blob/main/docs/open-source-agent-frameworks_EN.md#hermes'
+    }
+  }
+};
 
 function setLanguage(lang) {
   currentLang = lang;
@@ -1893,6 +2370,7 @@ function setLanguage(lang) {
   const activeCat = document.querySelector('.skills__cat-btn--active');
   renderSkills(activeCat ? activeCat.dataset.category : 'all');
   renderQuickstart();
+  renderInstallation(activeInstallPlatform);
 
   // Store preference
   try { localStorage.setItem('nature-skills-lang', lang); } catch(e) {}
@@ -1975,6 +2453,153 @@ function renderQuickstart() {
   }
   tbody.innerHTML = rows.join('');
 }
+
+/* ============================================
+   Installation Platform Switcher
+   ============================================ */
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function formatInstallCode(code) {
+  return code.split('\n').map(line => {
+    const escaped = escapeHtml(line);
+    if (/^\s*#/.test(line)) {
+      return `<span class="comment">${escaped}</span>`;
+    }
+    if (!line.trim()) return '';
+    return escaped.replace(/^(\s*)(\S+)/, '$1<span class="cmd">$2</span>');
+  }).join('\n');
+}
+
+function renderInstallation(platform = activeInstallPlatform) {
+  if (!installPlatformData[platform]) platform = 'codex';
+  activeInstallPlatform = platform;
+
+  const t = i18n[currentLang];
+  const platformDef = installPlatformData[platform];
+  const content = platformDef[currentLang];
+  const tabs = document.getElementById('installPlatformTabs');
+  const panel = document.getElementById('installPanel');
+
+  if (!tabs || !panel) return;
+
+  tabs.setAttribute('aria-label', t.installTabsAria);
+  tabs.querySelectorAll('[data-platform]').forEach(tab => {
+    const isActive = tab.dataset.platform === platform;
+    tab.id = `install-tab-${tab.dataset.platform}`;
+    tab.setAttribute('aria-selected', String(isActive));
+    tab.setAttribute('tabindex', isActive ? '0' : '-1');
+  });
+
+  const activeTab = tabs.querySelector(`[data-platform="${platform}"]`);
+  panel.setAttribute('aria-labelledby', activeTab.id);
+  panel.dataset.platform = platform;
+  panel.innerHTML = `
+    <div class="install-panel__guide">
+      <div class="install-panel__eyebrow">${escapeHtml(t.installStepsLabel)}</div>
+      <div class="install-panel__title-row">
+        <h3 class="install-panel__title">${escapeHtml(platformDef.name)}</h3>
+        <span class="install-panel__badge">${escapeHtml(content.badge)}</span>
+      </div>
+      <p class="install-panel__description">${escapeHtml(content.description)}</p>
+      <ol class="install-steps">
+        ${content.steps.map((step, index) => `
+          <li class="install-step">
+            <span class="install-step__number">${String(index + 1).padStart(2, '0')}</span>
+            <div>
+              <div class="install-step__title">${escapeHtml(step[0])}</div>
+              <p class="install-step__body">${escapeHtml(step[1])}</p>
+            </div>
+          </li>`).join('')}
+      </ol>
+      <a class="install-doc-link" href="${escapeHtml(content.docs)}" target="_blank" rel="noopener">
+        ${escapeHtml(t.installDocs)} <span aria-hidden="true">→</span>
+      </a>
+    </div>
+    <div class="install-panel__terminal">
+      <div class="install-terminal__bar">
+        <div class="install-terminal__identity">
+          <span class="install-terminal__dots" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span class="install-terminal__label">${escapeHtml(t.installTerminalLabel)} · ${escapeHtml(platformDef.name)}</span>
+        </div>
+        <button class="install-copy" type="button" data-copy-install>${escapeHtml(t.installCopy)}</button>
+      </div>
+      <pre class="install-code"><code>${formatInstallCode(content.code)}</code></pre>
+    </div>`;
+
+  panel.classList.remove('install-panel--refreshing');
+  void panel.offsetWidth;
+  panel.classList.add('install-panel--refreshing');
+}
+
+async function copyInstallCommands(button) {
+  const t = i18n[currentLang];
+  const content = installPlatformData[activeInstallPlatform][currentLang];
+
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(content.code);
+    } else {
+      const textarea = document.createElement('textarea');
+      textarea.value = content.code;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      const copied = document.execCommand('copy');
+      textarea.remove();
+      if (!copied) throw new Error('copy command failed');
+    }
+
+    button.textContent = t.installCopied;
+    button.setAttribute('aria-live', 'polite');
+    setTimeout(() => {
+      if (button.isConnected) button.textContent = i18n[currentLang].installCopy;
+    }, 1800);
+  } catch (error) {
+    button.textContent = t.installCopyFailed;
+    setTimeout(() => {
+      if (button.isConnected) button.textContent = i18n[currentLang].installCopy;
+    }, 1800);
+  }
+}
+
+const installPlatformTabs = document.getElementById('installPlatformTabs');
+const installPanel = document.getElementById('installPanel');
+
+installPlatformTabs.addEventListener('click', (event) => {
+  const tab = event.target.closest('[data-platform]');
+  if (!tab) return;
+  renderInstallation(tab.dataset.platform);
+});
+
+installPlatformTabs.addEventListener('keydown', (event) => {
+  if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+  event.preventDefault();
+
+  const currentIndex = installPlatformOrder.indexOf(activeInstallPlatform);
+  let nextIndex = currentIndex;
+  if (event.key === 'ArrowLeft') nextIndex = (currentIndex - 1 + installPlatformOrder.length) % installPlatformOrder.length;
+  if (event.key === 'ArrowRight') nextIndex = (currentIndex + 1) % installPlatformOrder.length;
+  if (event.key === 'Home') nextIndex = 0;
+  if (event.key === 'End') nextIndex = installPlatformOrder.length - 1;
+
+  const nextPlatform = installPlatformOrder[nextIndex];
+  renderInstallation(nextPlatform);
+  installPlatformTabs.querySelector(`[data-platform="${nextPlatform}"]`).focus();
+});
+
+installPanel.addEventListener('click', (event) => {
+  const copyButton = event.target.closest('[data-copy-install]');
+  if (copyButton) copyInstallCommands(copyButton);
+});
 
 /* ============================================
    Category Filter
