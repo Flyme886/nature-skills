@@ -27,6 +27,31 @@
 * 知识星球名称：Nature Skills以及背后的哲学！
  <img width="300" height="400" alt="1591" src="https://github.com/user-attachments/assets/64e37909-0a48-4bfb-8471-c2aff971a0f6" />
 
+### 1.3 自营 GPT / Claude 代充与成品号
+
+严格筛选渠道商，提供完全正规的充值渠道与服务。欢迎访问 **Nature AI 充值卡网**：
+
+<table>
+  <tr>
+    <td align="center" width="68%">
+      <a href="https://apiciyuan.top/">
+        <img src="assets/nature-ai-gpt-claude-service.png" alt="Nature AI GPT 与 Claude 代充及成品号服务" width="100%">
+      </a>
+      <br>
+      <strong>Nature AI 充值卡网</strong>
+      <br>
+      <a href="https://apiciyuan.top/">https://apiciyuan.top/</a>
+    </td>
+    <td align="center" width="32%">
+      <img src="assets/nature-ai-wechat.jpg" alt="Nature AI 客服 WeChat 二维码" width="280">
+      <br>
+      <strong>客服 WeChat</strong>
+      <br>
+      <sub>扫描二维码添加客服</sub>
+    </td>
+  </tr>
+</table>
+
 
 ## 快速开始
 
